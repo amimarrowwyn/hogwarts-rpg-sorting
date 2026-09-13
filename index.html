@@ -108,10 +108,15 @@
 
     .question-title {
       font-family: var(--font-serif);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       color: var(--gold-bright);
-      margin-bottom: 16px;
-      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .question-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      font-style: italic;
     }
     .options-grid {
       display: flex;
@@ -286,7 +291,7 @@
   <div class="container">
     <div class="header">
       <h1>Hogwarts Sorting Ritual</h1>
-      <p>"A berliku minda... let us see where your true allegiance lies."</p>
+      <p>"A convoluted mind... let us see where your true allegiance lies."</p>
     </div>
 
     <!-- Step 1: Registration -->
@@ -302,6 +307,7 @@
     <div id="quiz-step" class="hidden">
       <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
       <div class="question-title" id="question-text"></div>
+      <div class="question-subtitle" id="question-sub"></div>
       <div class="options-grid" id="options-container"></div>
     </div>
 
@@ -364,73 +370,73 @@
   <script>
     const questions = [
       {
-        title: "Soalan 1: Pertembungan di Lorong Gelap",
-        subtitle: "Apakah bentuk yang diambil oleh Boggart apabila ia berhadapan dengan kamu?",
+        title: "Question 1: The Alleyway Encounter",
+        subtitle: "Walking down Nocturne Alley at midnight, you encounter a Boggart. What form does it take?",
         options: [
-          { text: "A. Kegagalan mutlak atau melihat diri sendiri tidak berguna.", house: "Slytherin" },
-          { text: "B. Pengkhianatan daripada orang yang dipercayai atau ketidakadilan.", house: "Gryffindor" },
-          { text: "C. Kehilangan kebebasan, dikawal, atau kelemahan fizikal/mental.", house: "Ravenclaw" },
-          { text: "D. Kesepian abadi atau kehilangan insan tersayang.", house: "Hufflepuff" }
+          { text: "A. Absolute failure or watching yourself become entirely irrelevant and forgotten.", house: "Slytherin" },
+          { text: "B. Betrayal from those you trusted most or unrectifiable injustice.", house: "Gryffindor" },
+          { text: "C. Total loss of independence, mental restraint, or absolute helplessness.", house: "Ravenclaw" },
+          { text: "D. Eternal isolation, the tragic loss of loved ones, or endless solitude.", house: "Hufflepuff" }
         ]
       },
       {
-        title: "Soalan 2: Kebangkitan Mantera Patronus",
-        subtitle: "Ingatan apakah yang kamu panggil untuk menjelmakan Patronus yang kuat?",
+        title: "Question 2: Awakening the Patronus",
+        subtitle: "To conjure a powerful, corporeal Patronus, which powerful memory do you draw upon?",
         options: [
-          { text: "A. Kejayaan besar selepas perjuangan sengit yang membuktikan kebolehan diri.", house: "Slytherin" },
-          { text: "B. Saat kamu berdiri mempertahankan seseorang/prinsip berisiko tinggi.", house: "Gryffindor" },
-          { text: "C. Momen kedamaian bersama sahabat/keluarga di mana kamu diterima.", house: "Hufflepuff" },
-          { text: "D. Saat kamu menemui rahsia atau kebenaran besar tentang dunia.", house: "Ravenclaw" }
+          { text: "A. A monumental victory forged through intense struggle, proving your capability.", house: "Slytherin" },
+          { text: "B. The moment you stood up for someone else or defended your beliefs despite grave risk.", house: "Gryffindor" },
+          { text: "C. A moment of tranquil warmth with companions, feeling unconditionally accepted.", house: "Hufflepuff" },
+          { text: "D. The exact second you uncovered a profound truth that fundamentally shifted your reality.", house: "Ravenclaw" }
         ]
       },
       {
-        title: "Soalan 3: Persimpangan Hutan Terlarang",
-        subtitle: "Jalan manakah yang kamu pilih di Forbidden Forest?",
+        title: "Question 3: Crossroads in the Forbidden Forest",
+        subtitle: "Lost in the pitch-black woods, you come across a four-way path. Which route do you take?",
         options: [
-          { text: "A. Jalan berliku menjanjikan kemasyhuran dan takdir yang besar.", house: "Slytherin" },
-          { text: "B. Jalan lurus berbatuan yang kamu tahu adil dan betul.", house: "Gryffindor" },
-          { text: "C. Jalan rindang teduh dengan hilak tawa rakan-rakan.", house: "Hufflepuff" },
-          { text: "D. Jalan gelap dipenuhi kabus misteri dan pengetahuan kuno.", house: "Ravenclaw" }
+          { text: "A. A winding path illuminated by golden light, promising renown and grand destiny.", house: "Slytherin" },
+          { text: "B. A rugged, steep path that tests your fortitude, but leads to what is right.", house: "Gryffindor" },
+          { text: "C. A sheltered, quiet woodland path filled with ambient laughter and comforting streams.", house: "Hufflepuff" },
+          { text: "D. A mist-shrouded dark trail promising ancient, forgotten secrets.", house: "Ravenclaw" }
         ]
       },
       {
-        title: "Soalan 4: Lembaran Kerjaya & Cita-cita",
-        subtitle: "Apakah tugas di dunia sihir yang membuatkan darah kamu berdesir gembira?",
+        title: "Question 4: Career Trajectory",
+        subtitle: "Post-graduation, which wizarding vocation fires up your determination?",
         options: [
-          { text: "A. Auror / Ketua Auror: Memburu penyihir gelap di garis hadapan.", house: "Gryffindor" },
-          { text: "B. Unspeakable: Mengkaji misteri masa dan takdir di Jabatan Rahsia.", house: "Ravenclaw" },
-          { text: "C. Penyembuh (Healer) / Magizoologist: Merawat dan melindungi makhluk sihir.", house: "Hufflepuff" },
-          { text: "D. Menteri Sihir: Menguasai pentas politik dan memimpin masyarakat.", house: "Slytherin" }
+          { text: "A. Auror / Head Auror: Tracking down dark wizards and leading frontline tactical units.", house: "Gryffindor" },
+          { text: "B. Unspeakable: Deciphering fundamental mysteries of time and destiny in the Department of Mysteries.", house: "Ravenclaw" },
+          { text: "C. St Mungo's Healer / Magizoologist: Preserving rare magical species and restoring the wounded.", house: "Hufflepuff" },
+          { text: "D. Minister for Magic / High Court Magistrate: Navigating policy, exercising authority, and shaping history.", house: "Slytherin" }
         ]
       },
       {
-        title: "Soalan 5: Kamar Pengajian Fikir",
-        subtitle: "Buku subjek manakah yang paling menarik perhatian kamu pada tengah malam?",
+        title: "Question 5: Favorite Academic Focus",
+        subtitle: "In the quiet corners of the Hogwarts library at midnight, which tome draws your focus?",
         options: [
-          { text: "A. Defence Against the Dark Arts: Taktik tempur dan mantera pertahanan.", house: "Gryffindor" },
-          { text: "B. Potions & Alchemy: Kejituan, disiplin, dan ramuan rahsia.", house: "Slytherin" },
-          { text: "C. Ancient Runes & Arithmancy: Membaca simbol kuno dan corak nombor.", house: "Ravenclaw" },
-          { text: "D. Herbology & Care of Magical Creatures: Keajaiban alam semula jadi.", house: "Hufflepuff" }
+          { text: "A. Defense Against the Dark Arts & Martial Dueling Tactics.", house: "Gryffindor" },
+          { text: "B. Advanced Potions & Applied Alchemy: The precision of creating miraculous elixirs.", house: "Slytherin" },
+          { text: "C. Ancient Runes & Arithmancy: Deciphering archaic glyphs and predicting future patterns.", house: "Ravenclaw" },
+          { text: "D. Herbology & Care of Magical Creatures: Unlocking nature's secrets and bonding with beasts.", house: "Hufflepuff" }
         ]
       },
       {
-        title: "Soalan 6: Dilema Botol Phial Misteri",
-        subtitle: "Botol ramuan manakah di atas meja Professor McGonagall yang kamu minum?",
+        title: "Question 6: The Mysterious Phial Dilemma",
+        subtitle: "On Professor McGonagall’s desk rest four magical phials. You may drink only one. Which do you choose?",
         options: [
-          { text: "A. Ramuan emas berkilau (Felix Felicis) - keberanian dan nasib baik.", house: "Gryffindor" },
-          { text: "B. Ramuan berwap perak - membaca fikiran dan niat sebenar.", house: "Ravenclaw" },
-          { text: "C. Ramuan ungu gelap - kekuatan fizikal dan menguasai kemahiran.", house: "Slytherin" },
-          { text: "D. Ramuan jernih air - ketenangan jiwa dan menyembuhkan sakit hati.", house: "Hufflepuff" }
+          { text: "A. A glowing golden elixir granting boundless courage and extraordinary fortune.", house: "Gryffindor" },
+          { text: "B. A silver mist liquid allowing you to read minds and discern true intentions.", house: "Ravenclaw" },
+          { text: "C. A deep velvet purple draught granting immense fortitude and instant skill mastery.", house: "Slytherin" },
+          { text: "D. A crystal-clear liquid offering absolute inner peace and healing any emotional scar.", house: "Hufflepuff" }
         ]
       },
       {
-        title: "Soalan 7: Warisan Abadi",
-        subtitle: "Bagaimanakah kamu mahu orang mengenang kamu 100 tahun dari sekarang?",
+        title: "Question 7: Eternal Legacy",
+        subtitle: "When your name is uttered in the Great Hall a century from now, how do you wish to be remembered?",
         options: [
-          { text: "A. 'Dialah wira berani yang tidak pernah berundur.'", house: "Gryffindor" },
-          { text: "B. 'Dialah pemikir teragung yang merobohkan batasan pengetahuan.'", house: "Ravenclaw" },
-          { text: "C. 'Dialah pemimpin berkuasa yang mengubah sejarah dunia sihir.'", house: "Slytherin" },
-          { text: "D. 'Dialah sahabat yang paling setia dan membawa kedamaian.'", house: "Hufflepuff" }
+          { text: "A. 'The fearless champion who never backed down in the face of peril.'", house: "Gryffindor" },
+          { text: "B. 'The brilliant scholar who expanded the boundaries of human knowledge.'", house: "Ravenclaw" },
+          { text: "C. 'The formidable leader who reshaped the balance of power in our world.'", house: "Slytherin" },
+          { text: "D. 'The steadfast friend whose loyalty brought unity and lasting peace.'", house: "Hufflepuff" }
         ]
       },
       {
@@ -498,7 +504,8 @@
     function renderQuestion() {
       const q = questions[currentQuestion];
       document.getElementById("progress").style.width = `${((currentQuestion) / questions.length) * 100}%`;
-      document.getElementById("question-text").innerText = `${q.title}\n${q.subtitle}`;
+      document.getElementById("question-text").innerText = q.title;
+      document.getElementById("question-sub").innerText = q.subtitle;
       
       const container = document.getElementById("options-container");
       container.innerHTML = "";
