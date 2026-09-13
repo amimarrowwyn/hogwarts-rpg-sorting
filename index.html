@@ -2,350 +2,557 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Hogwarts Sorting RPG</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hogwarts Official Sorting Hat & Student Matriculation</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;600&display=swap');
-
-    :root { 
-      --bg:#080711; 
-      --card-bg: rgba(20, 18, 38, 0.75);
-      --card-border: rgba(212, 175, 55, 0.4);
-      --text: #e2e8f0; 
-      --accent: #f3d077;
-      --accent-glow: rgba(243, 208, 119, 0.4);
+    :root {
+      --bg-color: #0d0f12;
+      --card-bg: rgba(22, 27, 34, 0.85);
+      --border-color: #30363d;
+      --gold-accent: #c5a059;
+      --gold-bright: #e6c280;
+      --text-main: #e6edf3;
+      --text-muted: #8b949e;
+      --font-serif: 'Cinzel', 'Georgia', serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-    body { 
-      font-family: 'Plus Jakarta Sans', sans-serif; 
-      background: radial-gradient(circle at 50% 10%, #1e1b4b 0%, #09090e 70%),
-                  radial-gradient(circle at 80% 80%, #2e1065 0%, transparent 50%);
-      background-attachment: fixed;
-      color: var(--text); 
-      margin: 0; 
-      padding: 16px; 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-sans);
       min-height: 100vh;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
       background-image: 
-        radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 40px 70px, #ffd700, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 160px 120px, #dda0dd, rgba(0,0,0,0));
-      background-repeat: repeat;
-      background-size: 200px 200px;
-      opacity: 0.5;
-      pointer-events: none;
+        radial-gradient(circle at 50% 20%, rgba(197, 160, 89, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(20, 30, 45, 0.5) 0%, transparent 50%);
     }
 
-    .container { width:100%; max-width:540px; margin:0 auto; position: relative; z-index: 1; }
+    .container {
+      width: 100%;
+      max-width: 760px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+    }
 
-    h1, h2, h3, h4 {
-      font-family: 'Cinzel', serif;
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+    }
+    .header h1 {
+      font-family: var(--font-serif);
+      color: var(--gold-accent);
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    /* Name Input Section */
+    .name-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .name-section label {
+      font-size: 0.9rem;
+      color: var(--gold-accent);
+      text-transform: uppercase;
       letter-spacing: 1px;
     }
-
-    h1 { 
-      font-size:24px; 
-      text-align:center; 
-      color: var(--accent); 
-      margin-top:10px; 
-      text-shadow: 0 0 12px var(--accent-glow), 0 0 24px var(--accent-glow);
-    }
-
-    .card { 
-      background: var(--card-bg); 
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border); 
-      border-radius:16px; 
-      padding:20px; 
-      margin-bottom:20px; 
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(243, 208, 119, 0.05); 
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 14px;
-      margin: 15px 0;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 15px;
+    .name-section input {
+      background: #161b22;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: var(--text-main);
+      font-size: 1rem;
       outline: none;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+    .name-section input:focus {
+      border-color: var(--gold-accent);
     }
 
-    .input-field:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 10px var(--accent-glow);
+    /* Quiz Section */
+    .progress-bar {
+      height: 4px;
+      background: #21262d;
+      border-radius: 2px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--gold-accent);
+      width: 0%;
+      transition: width 0.3s ease;
     }
 
-    .question-option { 
-      display:block; 
-      width:100%; 
-      text-align:left; 
-      background: rgba(255, 255, 255, 0.05); 
-      margin: 12px 0; 
-      padding: 14px 16px; 
-      border: 1px solid rgba(243, 208, 119, 0.25); 
-      color: var(--text); 
-      border-radius: 12px; 
-      font-size: 13.5px; 
-      cursor: pointer; 
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    .question-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--gold-bright);
+      margin-bottom: 16px;
+      line-height: 1.4;
     }
-
-    .question-option:active, .question-option:hover { 
-      background: linear-gradient(135deg, rgba(243, 208, 119, 0.25) 0%, rgba(147, 51, 234, 0.2) 100%); 
-      border-color: var(--accent);
-      color: #fff; 
-      transform: translateY(-2px);
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
-    .subject-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: 15px;
-      max-height: 360px;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-
-    .subject-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(243, 208, 119, 0.2);
-      border-radius: 8px;
-      padding: 10px 12px;
+    .options-grid {
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .option-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 18px;
+      color: var(--text-main);
+      text-align: left;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: all 0.2s ease;
+      line-height: 1.5;
     }
-
-    .subject-item:hover {
-      background: rgba(243, 208, 119, 0.1);
-    }
-
-    .subject-item input[type="checkbox"] {
-      margin-top: 3px;
-      accent-color: var(--accent);
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-    }
-
-    .subject-info {
-      font-size: 12px;
-      line-height: 1.3;
-    }
-
-    .subject-name {
-      font-weight: bold;
-      color: var(--accent);
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    /* Student ID Card Styling */
-    .student-id-card { 
-      width:100%; 
-      max-width:350px; 
-      height:225px; 
-      margin:0 auto; 
-      border: 2px solid var(--accent); 
-      border-radius: 16px; 
-      padding: 14px 18px; 
-      background: linear-gradient(135deg, rgba(17, 14, 38, 0.95) 0%, rgba(30, 27, 75, 0.95) 100%); 
-      display:flex; 
-      flex-direction:column; 
-      justify-content:space-between; 
-      text-align:left; 
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.7), inset 0 0 20px rgba(243, 208, 119, 0.15);
-    }
-
-    .student-id-card::before {
-      content: "";
-      position: absolute;
-      top: -30px; right: -30px;
-      width: 120px; height: 120px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .student-id-header { 
-      display:flex; 
-      justify-content:space-between; 
-      align-items: center;
-      font-size:11px; 
-      border-bottom: 1px solid rgba(243, 208, 119, 0.3); 
-      padding-bottom:8px; 
-      font-family: 'Cinzel', serif;
-      color: var(--accent);
-      letter-spacing: 1px;
-    }
-
-    .hogwarts-badge-text {
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .student-id-body { display:flex; gap:14px; align-items:center; margin-top: 5px; }
-
-    .house-crest-avatar { 
-      width:65px; 
-      height:65px; 
-      border-radius:50%; 
-      border: 2px solid var(--accent); 
-      background: rgba(0,0,0,0.4); 
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      font-size:32px; 
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
-    .student-details h4 {
-      margin: 0;
-      color: var(--accent);
-      font-size: 16px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 180px;
-    }
-
-    .student-details p {
-      margin: 3px 0;
-      font-size: 11px;
-      opacity: 0.9;
-    }
-
-    .btn-group { display:flex; flex-direction:column; gap:10px; margin-top:12px; }
-
-    button.action-btn { 
-      background: linear-gradient(135deg, #f3d077 0%, #c5a059 100%); 
-      color: #0d0914; 
-      border: none; 
-      padding: 14px; 
-      border-radius: 10px; 
-      font-family: 'Cinzel', serif;
-      font-weight: bold; 
-      font-size: 13px; 
-      letter-spacing: 1px;
-      width: 100%; 
-      cursor: pointer; 
-      box-shadow: 0 4px 15px rgba(243, 208, 119, 0.3);
-      transition: all 0.3s ease;
-    }
-
-    button.action-btn:hover {
-      box-shadow: 0 6px 20px rgba(243, 208, 119, 0.5);
+    .option-btn:hover {
+      background: rgba(197, 160, 89, 0.1);
+      border-color: var(--gold-accent);
       transform: translateY(-1px);
     }
+
+    /* Start Button */
+    .start-btn {
+      width: 100%;
+      background: var(--gold-accent);
+      color: #0d0f12;
+      border: none;
+      padding: 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background 0.2s;
+    }
+    .start-btn:hover { background: var(--gold-bright); }
+
+    /* Result Dossier */
+    .hidden { display: none !important; }
+
+    .congrats-banner {
+      text-align: center;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-family: var(--font-serif);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Classic Acceptance Letter */
+    .acceptance-letter {
+      background: #fdf8eb;
+      color: #2b2b2b;
+      padding: 30px;
+      border-radius: 4px;
+      border: 12px solid #e2d3b4;
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .letter-header {
+      text-align: center;
+      border-bottom: 2px solid #8c6d3f;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .letter-header h2 {
+      font-size: 1.3rem;
+      color: #4a3517;
+      letter-spacing: 1px;
+    }
+    .letter-header p {
+      font-size: 0.85rem;
+      color: #6e542d;
+    }
+    .letter-body p { margin-bottom: 14px; font-size: 0.95rem; }
+    .letter-sig {
+      margin-top: 24px;
+      text-align: right;
+      font-style: italic;
+      font-weight: bold;
+      color: #4a3517;
+    }
+
+    /* Modern ID Card */
+    .id-card {
+      background: #12161f;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #38444d;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .id-card-header {
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+    }
+    .id-card-header h3 {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+    .id-card-body {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+    .id-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-accent);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5rem;
+      background: rgba(255,255,255,0.05);
+    }
+    .id-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .id-field label {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .id-field span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* House Specific Color Themes */
+    .theme-gryffindor { background: #740001; color: #ffc500; border: 1px solid #e3a000; }
+    .theme-slytherin { background: #1a472a; color: #aad372; border: 1px solid #2a623d; }
+    .theme-ravenclaw { background: #0e1a40; color: #946b2d; border: 1px solid #222f5b; }
+    .theme-hufflepuff { background: #ecb939; color: #000000; border: 1px solid #726255; }
+
+    .restart-btn {
+      margin-top: 24px;
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .restart-btn:hover { border-color: var(--text-main); color: var(--text-main); }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
   <div class="container">
-    <h1>✨ Hogwarts Sorting RPG ✨</h1>
-    
-    <!-- Input Nama -->
-    <div id="name-container" class="card">
-      <h3 style="margin-top:0; font-size:16px; color:var(--accent);">🏰 Welcome to Hogwarts</h3>
-      <p style="font-size:13px; opacity:0.8;">Enter your wizarding name to begin your sorting journey:</p>
-      <input type="text" id="player-name-input" class="input-field" placeholder="Your Name (e.g. Draco Malfoy)" maxlength="30">
-      <button class="action-btn" onclick="startQuiz()">Begin Sorting Process</button>
+    <div class="header">
+      <h1>Hogwarts Sorting Ritual</h1>
+      <p>"A berliku minda... let us see where your true allegiance lies."</p>
     </div>
 
-    <!-- Kad Kuiz -->
-    <div id="quiz-container" class="card" style="display: none;">
-      <h3 id="question-title" style="margin-top:0; font-size:16px; color:var(--accent);">Loading Question...</h3>
-      <div id="options-container"></div>
-    </div>
-
-    <!-- Pilihan Subjek -->
-    <div id="subject-selection-container" class="card" style="display: none;">
-      <h3 style="margin-top:0; font-size:16px; color:var(--accent);">📚 Select Your Elective Subjects</h3>
-      <p style="font-size:12px; opacity:0.8;">Choose any subjects you wish to study (<span id="selected-count">0</span> chosen):</p>
-      <div id="subject-grid" class="subject-grid"></div>
-      <br>
-      <button id="submit-subjects-btn" class="action-btn" onclick="confirmSubjects()">Finalize Curriculum</button>
-    </div>
-
-    <!-- Keputusan -->
-    <div id="results-container" style="display: none;">
-      <div id="private-sheet-target" class="card">
-        <h3 style="color:var(--accent); margin-top:0; text-align:center; font-size:18px;">📜 Hogwarts Dossier</h3>
-        <p style="font-size:11px; font-style:italic; text-align:center; opacity:0.7; margin-top:-8px;">CONFIDENTIAL / PRIVATE RECORD</p>
-        <hr style="border-color: rgba(243,208,119,0.2);">
-        <div id="sorting-hat-note" style="font-size:12px; background:rgba(255,255,255,0.03); padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid rgba(243,208,119,0.15);"></div>
-        <p style="font-size:13px;"><strong>Name:</strong> <span id="sheet-name">-</span></p>
-        <p style="font-size:13px;"><strong>Blood Status:</strong> <span id="sheet-blood">-</span></p>
-        <p style="font-size:13px;"><strong>House:</strong> <span id="sheet-house">-</span></p>
-        <p style="font-size:13px;"><strong>Affiliated Club:</strong> <span id="sheet-club">-</span></p>
-        <p style="font-size:13px;"><strong>Wand:</strong> <span id="sheet-wand">-</span></p>
-        <p style="font-size:13px;"><strong>Companion:</strong> <span id="sheet-companion">-</span></p>
-        <p style="font-size:13px;"><strong>Special Ability:</strong> <span id="sheet-ability">-</span></p>
-        <h4 style="color:var(--accent); margin-bottom:5px;">Enrolled Curriculum</h4>
-        <ol id="sheet-subjects" style="font-size:12px; padding-left:18px; margin:5px 0;"></ol>
-        <h4 style="color:var(--accent); margin-bottom:5px;">S.W.O.T. Analysis</h4>
-        <ul id="sheet-swot" style="font-size:12px; padding-left:18px; margin:0;"></ul>
+    <!-- Step 1: Registration -->
+    <div id="setup-step">
+      <div class="name-section">
+        <label for="student-name">Enter Student Full Name</label>
+        <input type="text" id="student-name" placeholder="e.g. Harry Potter" autocomplete="off">
       </div>
-      <div class="btn-group">
-        <button class="action-btn" onclick="exportToImage('private-sheet-target', 'Hogwarts_Dossier.png')">📥 Save Dossier (PNG)</button>
+      <button class="start-btn" onclick="startQuiz()">Begin Placement Evaluation</button>
+    </div>
+
+    <!-- Step 2: Quiz -->
+    <div id="quiz-step" class="hidden">
+      <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+      <div class="question-title" id="question-text"></div>
+      <div class="options-grid" id="options-container"></div>
+    </div>
+
+    <!-- Step 3: Result Dossier -->
+    <div id="result-step" class="hidden">
+      <div id="congrats-banner" class="congrats-banner"></div>
+
+      <!-- Classic Acceptance Letter -->
+      <div class="acceptance-letter">
+        <div class="letter-header">
+          <h2>HOGWARTS SCHOOL of WITCHCRAFT and WIZARDRY</h2>
+          <p>Headmistress: Minerva McGonagall</p>
+        </div>
+        <div class="letter-body">
+          <p>Dear <strong id="letter-name">Student</strong>,</p>
+          <p>We are pleased to inform you that you have been accepted at Hogwarts School of Witchcraft and Wizardry. Following the deliberation of the Sorting Hat, your core instincts, academic trajectory, and personal ethos have been thoroughly evaluated.</p>
+          <p>You have been formally assigned to <strong id="letter-house">House</strong>, where your potential will be cultivated alongside your peers. Enclosed you will find your official Student Identity Card.</p>
+          <p>Term begins on 1 September. We await your owl by no later than 31 July.</p>
+        </div>
+        <div class="letter-sig">
+          Yours sincerely,<br>
+          Minerva McGonagall<br>
+          <small>Deputy Headmistress</small>
+        </div>
       </div>
-      <br>
-      <div class="card" style="text-align: center;">
-        <h3 style="margin-top:0; color:var(--accent);">💳 Official Student ID Card</h3>
-        <div id="student-id-target" class="student-id-card">
-          <div class="student-id-header">
-            <span class="hogwarts-badge-text">🏰 HOGWARTS ACADEMY</span>
-            <span>#HW-2026</span>
-          </div>
-          <div class="student-id-body">
-            <div id="id-house-icon" class="house-crest-avatar">🐍</div>
-            <div class="student-details">
-              <h4 id="id-name">Student Name</h4>
-              <p>House: <strong id="id-house" style="color:var(--accent);">Slytherin</strong></p>
-              <p>Blood: <span id="id-blood">Pure-Blood</span></p>
-              <p>Club: <span id="id-club" style="color:var(--accent);">Slug Club</span></p>
-              <p>Electives: <span id="id-electives-count">0 Enrolled</span></p>
+
+      <!-- Modern ID Card -->
+      <div class="id-card">
+        <div class="id-card-header" id="id-card-header">
+          <h3>HOGWARTS STUDENT CREDENTIAL</h3>
+          <span id="id-house-tag">HOUSE</span>
+        </div>
+        <div class="id-card-body">
+          <div class="id-avatar" id="id-avatar">🎩</div>
+          <div class="id-details">
+            <div class="id-field">
+              <label>Full Name</label>
+              <span id="id-name-display">-</span>
+            </div>
+            <div class="id-field">
+              <label>Matric ID</label>
+              <span id="id-matric-display">-</span>
+            </div>
+            <div class="id-field">
+              <label>Primary Aptitude</label>
+              <span id="id-aptitude-display">-</span>
+            </div>
+            <div class="id-field">
+              <label>Status</label>
+              <span style="color: #4cd964;">Active / Matriculated</span>
             </div>
           </div>
-          <div style="font-size:8px; opacity:0.6; text-align:right; font-family:'Cinzel', serif; color:var(--accent);">OFFICIAL MAGIC CREDENTIAL</div>
-        </div>
-        <div class="btn-group">
-          <button class="action-btn" onclick="exportToImage('student-id-target', 'Hogwarts_Student_ID.png')">💳 Save ID Card (PNG)</button>
         </div>
       </div>
-      <br>
-      <div id="congrats-card-target" class="card" style="text-align:center;">
-        <h2 style="color:var(--accent); margin:5px 0;">CONGRATULATIONS!</h2>
-        <p style="font-size:12px; margin:0; opacity:0.8;">Your Sorted House:</p>
-        <h1 id="congrats-house" style="font-size:38px; margin:12px 0; letter-spacing:3px;">SLYTHERIN</h1>
-        <p id="congrats-quote" style="font-size:11px; font-style:italic; opacity:0.8;"></p>
-      </div>
-      <div class="btn-group">
-        <button class="action-btn" onclick="exportToImage('congrats-card-target', 'Congrats_Share.png')">🎉 Save Share Card (PNG)</button>
-      </div>
+
+      <button class="restart-btn" onclick="resetQuiz()">Re-evaluate Student</button>
     </div>
   </div>
-  <script src="app.js"></script>
+
+  <script>
+    const questions = [
+      {
+        title: "Soalan 1: Pertembungan di Lorong Gelap",
+        subtitle: "Apakah bentuk yang diambil oleh Boggart apabila ia berhadapan dengan kamu?",
+        options: [
+          { text: "A. Kegagalan mutlak atau melihat diri sendiri tidak berguna.", house: "Slytherin" },
+          { text: "B. Pengkhianatan daripada orang yang dipercayai atau ketidakadilan.", house: "Gryffindor" },
+          { text: "C. Kehilangan kebebasan, dikawal, atau kelemahan fizikal/mental.", house: "Ravenclaw" },
+          { text: "D. Kesepian abadi atau kehilangan insan tersayang.", house: "Hufflepuff" }
+        ]
+      },
+      {
+        title: "Soalan 2: Kebangkitan Mantera Patronus",
+        subtitle: "Ingatan apakah yang kamu panggil untuk menjelmakan Patronus yang kuat?",
+        options: [
+          { text: "A. Kejayaan besar selepas perjuangan sengit yang membuktikan kebolehan diri.", house: "Slytherin" },
+          { text: "B. Saat kamu berdiri mempertahankan seseorang/prinsip berisiko tinggi.", house: "Gryffindor" },
+          { text: "C. Momen kedamaian bersama sahabat/keluarga di mana kamu diterima.", house: "Hufflepuff" },
+          { text: "D. Saat kamu menemui rahsia atau kebenaran besar tentang dunia.", house: "Ravenclaw" }
+        ]
+      },
+      {
+        title: "Soalan 3: Persimpangan Hutan Terlarang",
+        subtitle: "Jalan manakah yang kamu pilih di Forbidden Forest?",
+        options: [
+          { text: "A. Jalan berliku menjanjikan kemasyhuran dan takdir yang besar.", house: "Slytherin" },
+          { text: "B. Jalan lurus berbatuan yang kamu tahu adil dan betul.", house: "Gryffindor" },
+          { text: "C. Jalan rindang teduh dengan hilak tawa rakan-rakan.", house: "Hufflepuff" },
+          { text: "D. Jalan gelap dipenuhi kabus misteri dan pengetahuan kuno.", house: "Ravenclaw" }
+        ]
+      },
+      {
+        title: "Soalan 4: Lembaran Kerjaya & Cita-cita",
+        subtitle: "Apakah tugas di dunia sihir yang membuatkan darah kamu berdesir gembira?",
+        options: [
+          { text: "A. Auror / Ketua Auror: Memburu penyihir gelap di garis hadapan.", house: "Gryffindor" },
+          { text: "B. Unspeakable: Mengkaji misteri masa dan takdir di Jabatan Rahsia.", house: "Ravenclaw" },
+          { text: "C. Penyembuh (Healer) / Magizoologist: Merawat dan melindungi makhluk sihir.", house: "Hufflepuff" },
+          { text: "D. Menteri Sihir: Menguasai pentas politik dan memimpin masyarakat.", house: "Slytherin" }
+        ]
+      },
+      {
+        title: "Soalan 5: Kamar Pengajian Fikir",
+        subtitle: "Buku subjek manakah yang paling menarik perhatian kamu pada tengah malam?",
+        options: [
+          { text: "A. Defence Against the Dark Arts: Taktik tempur dan mantera pertahanan.", house: "Gryffindor" },
+          { text: "B. Potions & Alchemy: Kejituan, disiplin, dan ramuan rahsia.", house: "Slytherin" },
+          { text: "C. Ancient Runes & Arithmancy: Membaca simbol kuno dan corak nombor.", house: "Ravenclaw" },
+          { text: "D. Herbology & Care of Magical Creatures: Keajaiban alam semula jadi.", house: "Hufflepuff" }
+        ]
+      },
+      {
+        title: "Soalan 6: Dilema Botol Phial Misteri",
+        subtitle: "Botol ramuan manakah di atas meja Professor McGonagall yang kamu minum?",
+        options: [
+          { text: "A. Ramuan emas berkilau (Felix Felicis) - keberanian dan nasib baik.", house: "Gryffindor" },
+          { text: "B. Ramuan berwap perak - membaca fikiran dan niat sebenar.", house: "Ravenclaw" },
+          { text: "C. Ramuan ungu gelap - kekuatan fizikal dan menguasai kemahiran.", house: "Slytherin" },
+          { text: "D. Ramuan jernih air - ketenangan jiwa dan menyembuhkan sakit hati.", house: "Hufflepuff" }
+        ]
+      },
+      {
+        title: "Soalan 7: Warisan Abadi",
+        subtitle: "Bagaimanakah kamu mahu orang mengenang kamu 100 tahun dari sekarang?",
+        options: [
+          { text: "A. 'Dialah wira berani yang tidak pernah berundur.'", house: "Gryffindor" },
+          { text: "B. 'Dialah pemikir teragung yang merobohkan batasan pengetahuan.'", house: "Ravenclaw" },
+          { text: "C. 'Dialah pemimpin berkuasa yang mengubah sejarah dunia sihir.'", house: "Slytherin" },
+          { text: "D. 'Dialah sahabat yang paling setia dan membawa kedamaian.'", house: "Hufflepuff" }
+        ]
+      },
+      {
+        title: "Question 8: The Ethical Dilemma",
+        subtitle: "A classmate is cheating using an unapproved charm during exams. What is your reaction?",
+        options: [
+          { text: "A. Intervene directly or report it immediately—academic integrity comes first.", house: "Gryffindor" },
+          { text: "B. Analyze discreetly first; expose it strategically if it disadvantages the curve.", house: "Slytherin" },
+          { text: "C. Confront the student privately after the exam to give them a chance to confess.", house: "Ravenclaw" },
+          { text: "D. Ignore it—peer loyalty comes before arbitrary institutional rules.", house: "Hufflepuff" }
+        ]
+      },
+      {
+        title: "Question 9: The Unfamiliar Challenge",
+        subtitle: "You are assigned a complex project requiring unfamiliar skills. How do you contribute?",
+        options: [
+          { text: "A. Take charge of leadership and high-stakes decision-making.", house: "Gryffindor" },
+          { text: "B. Research the core principles and handle the technical design.", house: "Ravenclaw" },
+          { text: "C. Facilitate communication and support members struggling with workload.", house: "Hufflepuff" },
+          { text: "D. Optimize project flow and find shortcuts to ensure top evaluation.", house: "Slytherin" }
+        ]
+      },
+      {
+        title: "Question 10: The Vault of Knowledge",
+        subtitle: "You gain access to restricted unverified research protocols. How do you use it?",
+        options: [
+          { text: "A. Test the protocols through direct experimentation to measure real-world impact.", house: "Gryffindor" },
+          { text: "B. Methodically transcribe and verify formulas to expand core scholarship.", house: "Ravenclaw" },
+          { text: "C. Review material carefully to ensure it poses no safety hazards to others.", house: "Hufflepuff" },
+          { text: "D. Master advanced techniques to gain a competitive edge in your field.", house: "Slytherin" }
+        ]
+      }
+    ];
+
+    const aptitudes = {
+      Gryffindor: "Tactical Leadership & Duel Magic",
+      Slytherin: "Strategic Alchemy & Resource Management",
+      Ravenclaw: "Theoretical Arithmancy & Cryptography",
+      Hufflepuff: "Applied Herbology & Magical Healing"
+    };
+
+    const houseIcons = {
+      Gryffindor: "🦁",
+      Slytherin: "🐍",
+      Ravenclaw: "🦅",
+      Hufflepuff: "🦡"
+    };
+
+    let currentQuestion = 0;
+    let studentName = "";
+    let scores = { Gryffindor: 0, Slytherin: 0, Ravenclaw: 0, Hufflepuff: 0 };
+
+    function startQuiz() {
+      const nameInput = document.getElementById("student-name").value.trim();
+      if (!nameInput) {
+        alert("Please enter your name before facing the Sorting Hat.");
+        return;
+      }
+      studentName = nameInput;
+      document.getElementById("setup-step").classList.add("hidden");
+      document.getElementById("quiz-step").classList.remove("hidden");
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("progress").style.width = `${((currentQuestion) / questions.length) * 100}%`;
+      document.getElementById("question-text").innerText = `${q.title}\n${q.subtitle}`;
+      
+      const container = document.getElementById("options-container");
+      container.innerHTML = "";
+      
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerText = opt.text;
+        btn.onclick = () => selectOption(opt.house);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectOption(house) {
+      scores[house]++;
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById("quiz-step").classList.add("hidden");
+      document.getElementById("result-step").classList.remove("hidden");
+
+      // Find winning house
+      let sortedHouse = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+      // Theme Banner
+      const banner = document.getElementById("congrats-banner");
+      banner.innerText = `Congratulations! You belong in ${sortedHouse.toUpperCase()}!`;
+      banner.className = `congrats-banner theme-${sortedHouse.toLowerCase()}`;
+
+      // Letter Details
+      document.getElementById("letter-name").innerText = studentName;
+      document.getElementById("letter-house").innerText = sortedHouse;
+
+      // ID Card Details
+      document.getElementById("id-card-header").className = `id-card-header theme-${sortedHouse.toLowerCase()}`;
+      document.getElementById("id-house-tag").innerText = sortedHouse.toUpperCase();
+      document.getElementById("id-avatar").innerText = houseIcons[sortedHouse];
+      document.getElementById("id-name-display").innerText = studentName;
+      document.getElementById("id-matric-display").innerText = `HW-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+      document.getElementById("id-aptitude-display").innerText = aptitudes[sortedHouse];
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      scores = { Gryffindor: 0, Slytherin: 0, Ravenclaw: 0, Hufflepuff: 0 };
+      document.getElementById("result-step").classList.add("hidden");
+      document.getElementById("setup-step").classList.remove("hidden");
+    }
+  </script>
 </body>
 </html>
