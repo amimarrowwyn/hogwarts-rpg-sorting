@@ -97,7 +97,7 @@ function showSubjectSelection() {
   const grid = document.getElementById('subject-grid');
   grid.innerHTML = '';
 
-  availableSubjects.forEach((sub, index) => {
+  availableSubjects.forEach((sub) => {
     const item = document.createElement('label');
     item.className = 'subject-item';
     item.innerHTML = `
