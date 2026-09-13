@@ -1,24 +1,32 @@
+const availableSubjects = [
+  { name: "Transfiguration", desc: "Learning to change the physical form and properties of objects." },
+  { name: "Charms", desc: "Learning to cast spells that add or alter properties of an object or person." },
+  { name: "Potions", desc: "Mixing magical ingredients in cauldrons to create potions, antidotes, and elixirs." },
+  { name: "History of Magic", desc: "Studying past wizarding events, goblin rebellions, and magic history taught by a ghost." },
+  { name: "Defence Against the Dark Arts", desc: "Learning protective and defensive spells against dark creatures and curses." },
+  { name: "Astronomy", desc: "Observing stars, planets, and moons from the Astronomy Tower." },
+  { name: "Herbology", desc: "Studying and caring for magical plants, fungi, and botanical ingredients." },
+  { name: "Flying", desc: "Mastering broomstick flight, aerial control, and magical maneuvers." },
+  { name: "Care of Magical Creatures", desc: "Studying, feeding, and handling beasts like Hippogriffs and Thestrals." },
+  { name: "Divination", desc: "Attempting to foresee the future using crystal balls, tea leaves, and palmistry." },
+  { name: "Arithmancy", desc: "A complex, number-based branch of magic related to magical properties of numbers." },
+  { name: "Study of Ancient Runes", desc: "Translating and interpreting old magical scripts and symbols." },
+  { name: "Muggle Studies", desc: "Understanding non-magical society, technology, and culture." },
+  { name: "Alchemy", desc: "Exploring the transmutation of substances and the magical nature of elements." }
+];
+
 const quizQuestions = [
   {
     title: "1. Under high pressure or conflict, what is your natural reaction?",
     options: [
-      { text: "Stay calm, analyze the situation, and seek the most strategic/informed answer.", house: "Ravenclaw" },
-      { text: "Act quickly and stand brave to defend your friends.", house: "Gryffindor" },
+      { text: "Stay calm, analyze the situation, and seek the most strategic answer.", house: "Ravenclaw" },
+      { text: "Act quickly and stand brave to defend your peers.", house: "Gryffindor" },
       { text: "Keep distance, protect personal boundary, and identify opponent weaknesses.", house: "Slytherin" },
       { text: "Seek peace and ensure everyone is safe and accounted for.", house: "Hufflepuff" }
     ]
   },
   {
-    title: "2. In HexRPG, which practical magic subject interests you most?",
-    options: [
-      { text: "Herbology & Charms — Theoretical mastery and plant/incantation magic.", house: "Ravenclaw", sub: "Herbology & Charms" },
-      { text: "Defense Against the Dark Arts & Curses — Combat techniques & self-defense.", house: "Slytherin", sub: "DADA & Curses" },
-      { text: "Potions & Transfiguration — Precision and survival alchemy.", house: "Slytherin", sub: "Potions & Transfiguration" },
-      { text: "Healing & Magic Cooking — Care arts and everyday practical spellwork.", house: "Hufflepuff", sub: "Healing & Magic Cooking" }
-    ]
-  },
-  {
-    title: "3. Which companion animal best reflects your personal energy?",
+    title: "2. Which companion animal best reflects your personal energy?",
     options: [
       { text: "Black Barn Owl — Calm, night observer, swift message deliverer.", animal: "Black Barn Owl" },
       { text: "Shadow Cat — Independent, quiet, sharp instinct.", animal: "Shadow Cat" },
@@ -27,20 +35,20 @@ const quizQuestions = [
     ]
   },
   {
-    title: "4. What rare ability or trait resonates most with your inner self?",
+    title: "3. What rare ability or trait resonates most with your inner self?",
     options: [
-      { text: "The Schism (Dual-Living) — Ability to isolate reality and magic minds seamlessly.", ability: "The Schism (Dual-Mind Isolation)" },
+      { text: "The Schism — Ability to isolate reality and magic minds seamlessly.", ability: "The Schism (Dual-Mind Isolation)" },
       { text: "The Sight — Intuitive foresight to sense danger before it happens.", ability: "The Sight (Intuitive Foresight)" },
       { text: "Wild Resonance — Natural ability to communicate with magical flora.", ability: "Wild Resonance (Botanical Empathy)" }
     ]
   },
   {
-    title: "5. Final Choice: Is there a specific House YOU WANT to belong to?",
+    title: "4. Final Choice: Is there a specific House YOU WANT to belong to?",
     options: [
-      { text: "Slytherin — I know where I belong.", pref: "Slytherin" },
-      { text: "Ravenclaw — Where minds are sharpest.", pref: "Ravenclaw" },
-      { text: "Gryffindor — Where the brave reside.", pref: "Gryffindor" },
-      { text: "Hufflepuff — Where loyalty comes first.", pref: "Hufflepuff" },
+      { text: "Slytherin — Ambition and resourcefulness.", pref: "Slytherin" },
+      { text: "Ravenclaw — Wisdom and intellect.", pref: "Ravenclaw" },
+      { text: "Gryffindor — Bravery and chivalry.", pref: "Gryffindor" },
+      { text: "Hufflepuff — Loyalty and dedication.", pref: "Hufflepuff" },
       { text: "Let the Sorting Hat decide based on my answers.", pref: "none" }
     ]
   }
@@ -48,10 +56,10 @@ const quizQuestions = [
 
 let currentQuestion = 0;
 let scores = { Slytherin: 0, Ravenclaw: 0, Gryffindor: 0, Hufflepuff: 0 };
-let chosenSubject = "Herbology & Charms";
 let chosenAnimal = "Black Barn Owl";
 let chosenAbility = "The Schism (Dual-Mind Isolation)";
 let housePreference = "none";
+let selectedSubjects = [];
 
 function renderQuestion() {
   const q = quizQuestions[currentQuestion];
@@ -70,7 +78,6 @@ function renderQuestion() {
 
 function selectOption(opt) {
   if (opt.house) scores[opt.house]++;
-  if (opt.sub) chosenSubject = opt.sub;
   if (opt.animal) chosenAnimal = opt.animal;
   if (opt.ability) chosenAbility = opt.ability;
   if (opt.pref) housePreference = opt.pref;
@@ -79,12 +86,54 @@ function selectOption(opt) {
   if (currentQuestion < quizQuestions.length) {
     renderQuestion();
   } else {
-    processFinalResults();
+    showSubjectSelection();
   }
 }
 
-function processFinalResults() {
+function showSubjectSelection() {
   document.getElementById('quiz-container').style.display = 'none';
+  document.getElementById('subject-selection-container').style.display = 'block';
+
+  const grid = document.getElementById('subject-grid');
+  grid.innerHTML = '';
+
+  availableSubjects.forEach((sub, index) => {
+    const item = document.createElement('label');
+    item.className = 'subject-item';
+    item.innerHTML = `
+      <input type="checkbox" value="${sub.name}" onchange="toggleSubject(this)">
+      <div class="subject-info">
+        <span class="subject-name">${sub.name}</span>
+        <span>${sub.desc}</span>
+      </div>
+    `;
+    grid.appendChild(item);
+  });
+}
+
+function toggleSubject(checkbox) {
+  if (checkbox.checked) {
+    if (selectedSubjects.length >= 10) {
+      checkbox.checked = false;
+      alert("You can only select up to 10 subjects!");
+      return;
+    }
+    selectedSubjects.push(checkbox.value);
+  } else {
+    selectedSubjects = selectedSubjects.filter(name => name !== checkbox.value);
+  }
+
+  document.getElementById('selected-count').innerText = selectedSubjects.length;
+  const btn = document.getElementById('submit-subjects-btn');
+  btn.disabled = selectedSubjects.length !== 10;
+}
+
+function confirmSubjects() {
+  document.getElementById('subject-selection-container').style.display = 'none';
+  processFinalResults();
+}
+
+function processFinalResults() {
   document.getElementById('results-container').style.display = 'block';
 
   let naturalHouse = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
@@ -114,25 +163,22 @@ function renderOutputs(house, note) {
   document.getElementById('sheet-companion').innerText = chosenAnimal;
   document.getElementById('sheet-ability').innerText = chosenAbility;
 
-  document.getElementById('sheet-subjects').innerHTML = `
-    <ul style="padding-left:18px; margin:5px 0;">
-      <li><strong>Core Focus:</strong> ${chosenSubject} (Theoretical Mastery)</li>
-      <li><strong>Defense Against the Dark Arts:</strong> Practical Combat</li>
-      <li><strong>Potions & Transfiguration:</strong> Survival Alchemy</li>
-      <li><strong>Magic Cooking & Healing:</strong> Specialized Craft</li>
-    </ul>
-  `;
+  const subjectListHTML = selectedSubjects.map(subName => {
+    const detail = availableSubjects.find(s => s.name === subName);
+    return `<li><strong>${detail.name}:</strong> ${detail.desc}</li>`;
+  }).join('');
+
+  document.getElementById('sheet-subjects').innerHTML = subjectListHTML;
 
   document.getElementById('sheet-swot').innerHTML = `
-    <li><strong>Strength:</strong> Strong theoretical mind, mastery over Charms & Herbology.</li>
-    <li><strong>Weakness:</strong> Tendency towards intense self-isolation and overthinking.</li>
-    <li><strong>Opportunity:</strong> Dual-living ability bridges practical logic with magical prowess.</li>
-    <li><strong>Threat:</strong> Over-reliance on self-shielding mechanisms.</li>
+    <li><strong>Strength:</strong> Versatile mastery across 10 specialized academic disciplines.</li>
+    <li><strong>Weakness:</strong> High potential for academic burnout due to a heavy 10-subject course load.</li>
+    <li><strong>Opportunity:</strong> Dual-living ability bridges practical logic with broad magical knowledge.</li>
+    <li><strong>Threat:</strong> Over-reliance on self-shielding mechanisms in stressful environments.</li>
   `;
 
   document.getElementById('id-name').innerText = "Ami";
   document.getElementById('id-house').innerText = house;
-  document.getElementById('id-specialty').innerText = chosenSubject;
 
   const houseQuotes = {
     Slytherin: '"Greatness awaits those who have the ambition to seize it."',
