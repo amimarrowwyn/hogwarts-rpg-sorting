@@ -30,7 +30,6 @@
       min-height: 100vh;
     }
 
-    /* Dreamy Starry Particles Overlay */
     body::before {
       content: "";
       position: fixed;
@@ -96,11 +95,11 @@
       text-align:left; 
       background: rgba(255, 255, 255, 0.05); 
       margin: 12px 0; 
-      padding: 16px; 
+      padding: 14px 16px; 
       border: 1px solid rgba(243, 208, 119, 0.25); 
       color: var(--text); 
       border-radius: 12px; 
-      font-size: 14px; 
+      font-size: 13.5px; 
       cursor: pointer; 
       transition: all 0.3s ease;
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
@@ -160,11 +159,11 @@
       margin-bottom: 2px;
     }
 
-    /* Exclusive Student ID Card Styling */
+    /* Student ID Card Styling */
     .student-id-card { 
       width:100%; 
       max-width:350px; 
-      height:220px; 
+      height:225px; 
       margin:0 auto; 
       border: 2px solid var(--accent); 
       border-radius: 16px; 
@@ -266,7 +265,7 @@
   <div class="container">
     <h1>✨ Hogwarts Sorting RPG ✨</h1>
     
-    <!-- Step 0: Name Input Card -->
+    <!-- Input Nama -->
     <div id="name-container" class="card">
       <h3 style="margin-top:0; font-size:16px; color:var(--accent);">🏰 Welcome to Hogwarts</h3>
       <p style="font-size:13px; opacity:0.8;">Enter your wizarding name to begin your sorting journey:</p>
@@ -274,13 +273,13 @@
       <button class="action-btn" onclick="startQuiz()">Begin Sorting Process</button>
     </div>
 
-    <!-- Quiz Question Card -->
+    <!-- Kad Kuiz -->
     <div id="quiz-container" class="card" style="display: none;">
       <h3 id="question-title" style="margin-top:0; font-size:16px; color:var(--accent);">Loading Question...</h3>
       <div id="options-container"></div>
     </div>
 
-    <!-- Subject Selection Card -->
+    <!-- Pilihan Subjek -->
     <div id="subject-selection-container" class="card" style="display: none;">
       <h3 style="margin-top:0; font-size:16px; color:var(--accent);">📚 Select Your Elective Subjects</h3>
       <p style="font-size:12px; opacity:0.8;">Choose any subjects you wish to study (<span id="selected-count">0</span> chosen):</p>
@@ -289,7 +288,7 @@
       <button id="submit-subjects-btn" class="action-btn" onclick="confirmSubjects()">Finalize Curriculum</button>
     </div>
 
-    <!-- Results Cards -->
+    <!-- Keputusan -->
     <div id="results-container" style="display: none;">
       <div id="private-sheet-target" class="card">
         <h3 style="color:var(--accent); margin-top:0; text-align:center; font-size:18px;">📜 Hogwarts Dossier</h3>
@@ -299,6 +298,7 @@
         <p style="font-size:13px;"><strong>Name:</strong> <span id="sheet-name">-</span></p>
         <p style="font-size:13px;"><strong>Blood Status:</strong> <span id="sheet-blood">-</span></p>
         <p style="font-size:13px;"><strong>House:</strong> <span id="sheet-house">-</span></p>
+        <p style="font-size:13px;"><strong>Affiliated Club:</strong> <span id="sheet-club">-</span></p>
         <p style="font-size:13px;"><strong>Wand:</strong> <span id="sheet-wand">-</span></p>
         <p style="font-size:13px;"><strong>Companion:</strong> <span id="sheet-companion">-</span></p>
         <p style="font-size:13px;"><strong>Special Ability:</strong> <span id="sheet-ability">-</span></p>
@@ -324,6 +324,7 @@
               <h4 id="id-name">Student Name</h4>
               <p>House: <strong id="id-house" style="color:var(--accent);">Slytherin</strong></p>
               <p>Blood: <span id="id-blood">Pure-Blood</span></p>
+              <p>Club: <span id="id-club" style="color:var(--accent);">Slug Club</span></p>
               <p>Electives: <span id="id-electives-count">0 Enrolled</span></p>
             </div>
           </div>
