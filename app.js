@@ -19,10 +19,10 @@ const quizQuestions = [
   {
     title: "1. What is your magical lineage and blood heritage?",
     options: [
-      { text: "Pure-Blood — Deep wizarding roots across centuries.", blood: "Pure-Blood" },
-      { text: "Half-Blood — Raised between magical and non-magical worlds.", blood: "Half-Blood" },
-      { text: "Muggle-Born — The first in my family to unleash magic.", blood: "Muggle-Born" },
-      { text: "Mysterious / Unknown Ancestry — My origins remain hidden.", blood: "Unknown Lineage" }
+      { text: "Pure-Blood — Deep wizarding roots across centuries.", blood: "Pure-Blood", house: "Slytherin" },
+      { text: "Half-Blood — Raised between magical and non-magical worlds.", blood: "Half-Blood", house: "Ravenclaw" },
+      { text: "Muggle-Born — The first in my family to unleash magic.", blood: "Muggle-Born", house: "Gryffindor" },
+      { text: "Mysterious / Unknown Ancestry — My origins remain hidden.", blood: "Unknown Lineage", house: "Hufflepuff" }
     ]
   },
   {
@@ -37,25 +37,41 @@ const quizQuestions = [
   {
     title: "3. Which companion animal best reflects your personal energy?",
     options: [
-      { text: "Black Barn Owl — Calm, night observer, swift message deliverer.", animal: "Black Barn Owl" },
-      { text: "Shadow Cat — Independent, quiet, sharp instinct.", animal: "Shadow Cat" },
-      { text: "Raven — Intelligent, secret gatherer, mysterious.", animal: "Raven" },
-      { text: "Viper / Snake — Calm but formidable when provoked.", animal: "Viper" }
+      { text: "Black Barn Owl — Calm, night observer, swift message deliverer.", animal: "Black Barn Owl", house: "Ravenclaw" },
+      { text: "Shadow Cat — Independent, quiet, sharp instinct.", animal: "Shadow Cat", house: "Slytherin" },
+      { text: "Raven — Intelligent, secret gatherer, mysterious.", animal: "Raven", house: "Ravenclaw" },
+      { text: "Viper / Snake — Calm but formidable when provoked.", animal: "Viper", house: "Slytherin" }
     ]
   },
   {
     title: "4. What rare ability or trait resonates most with your inner self?",
     options: [
-      { text: "The Schism — Ability to isolate reality and magic minds seamlessly.", ability: "The Schism (Dual-Mind Isolation)" },
-      { text: "The Sight — Intuitive foresight to sense danger before it happens.", ability: "The Sight (Intuitive Foresight)" },
-      { text: "Wild Resonance — Natural ability to communicate with magical flora.", ability: "Wild Resonance (Botanical Empathy)" },
-      { text: "Parseltongue — Innate capacity to speak and comprehend serpentine languages.", ability: "Parseltongue (Serpent Speech)" },
-      { text: "Metamorphmagus — Rare capability to alter physical appearance at will.", ability: "Metamorphmagus (Shape Alteration)" },
-      { text: "Legilimency — Skill to navigate and extract thoughts from another's mind.", ability: "Legilimency (Mind Navigation)" }
+      { text: "The Schism — Ability to isolate reality and magic minds seamlessly.", ability: "The Schism (Dual-Mind Isolation)", house: "Ravenclaw" },
+      { text: "The Sight — Intuitive foresight to sense danger before it happens.", ability: "The Sight (Intuitive Foresight)", house: "Hufflepuff" },
+      { text: "Wild Resonance — Natural ability to communicate with magical flora.", ability: "Wild Resonance (Botanical Empathy)", house: "Hufflepuff" },
+      { text: "Parseltongue — Innate capacity to speak and comprehend serpentine languages.", ability: "Parseltongue (Serpent Speech)", house: "Slytherin" },
+      { text: "Metamorphmagus — Rare capability to alter physical appearance at will.", ability: "Metamorphmagus (Shape Alteration)", house: "Gryffindor" },
+      { text: "Legilimency — Skill to navigate and extract thoughts from another's mind.", ability: "Legilimency (Mind Navigation)", house: "Slytherin" }
     ]
   },
   {
-    title: "5. Final Choice: Is there a specific House YOU WANT to belong to?",
+    title: "5. What kind of Club do you wish to join at Hogwarts?",
+    options: [
+      { text: "Slug Club — Exclusive group for talented, well-connected, or promising students.", club: "Slug Club", house: "Slytherin" },
+      { text: "Duelling Club — Focused on mastering practical defensive magic and combat.", club: "Duelling Club", house: "Gryffindor" },
+      { text: "Dumbledore's Army — Secret defense organization standing up for justice.", club: "Dumbledore's Army", house: "Gryffindor" },
+      { text: "Inquisitorial Squad — Disciplinary squad enforcing authority and order.", club: "Inquisitorial Squad", house: "Slytherin" },
+      { text: "Sphinx Club — Centered on solving complex riddles and pursuit of knowledge.", club: "Sphinx Club", house: "Ravenclaw" },
+      { text: "Wizard's Chess Club — Strategic board tactics and intellectual mastery.", club: "Wizard's Chess Club", house: "Ravenclaw" },
+      { text: "Hippogriff Club — Focuses on curiosity, care of magical beasts, and wisdom.", club: "Hippogriff Club", house: "Hufflepuff" },
+      { text: "Gobstone Club — Traditional marble game building camaraderie.", club: "Gobstone Club", house: "Hufflepuff" },
+      { text: "Frog Choir — Musical ensemble performing alongside giant croaking toads.", club: "Frog Choir", house: "Hufflepuff" },
+      { text: "Dragon Club — Caters to adventurous and daring thrill-seekers.", club: "Dragon Club", house: "Gryffindor" },
+      { text: "Wizard Card Collectors' Club — Gathering rare magic lore and cards.", club: "Wizard Card Collectors' Club", house: "Ravenclaw" }
+    ]
+  },
+  {
+    title: "6. Final Choice: Is there a specific House YOU WANT to belong to?",
     options: [
       { text: "Slytherin — Ambition, cunning, and resourcefulness.", pref: "Slytherin" },
       { text: "Ravenclaw — Wisdom, intellect, and curiosity.", pref: "Ravenclaw" },
@@ -72,6 +88,7 @@ let scores = { Slytherin: 0, Ravenclaw: 0, Gryffindor: 0, Hufflepuff: 0 };
 let chosenBlood = "Pure-Blood";
 let chosenAnimal = "Black Barn Owl";
 let chosenAbility = "The Schism (Dual-Mind Isolation)";
+let chosenClub = "Duelling Club";
 let housePreference = "none";
 let selectedSubjects = [];
 
@@ -107,6 +124,7 @@ function selectOption(opt) {
   if (opt.house) scores[opt.house]++;
   if (opt.animal) chosenAnimal = opt.animal;
   if (opt.ability) chosenAbility = opt.ability;
+  if (opt.club) chosenClub = opt.club;
   if (opt.pref) housePreference = opt.pref;
 
   currentQuestion++;
@@ -168,7 +186,7 @@ function processFinalResults() {
       noteText = `The Sorting Hat sensed strong **${naturalHouse}** traits — but the Hat honors personal choice. You have been placed in **${finalHouse}**.`;
     }
   } else {
-    noteText = `The Sorting Hat searched your mind and made its decision without hesitation: **${finalHouse}**!`;
+    noteText = `The Sorting Hat searched your mind, evaluated your club affiliation, and made its decision: **${finalHouse}**!`;
   }
 
   renderOutputs(finalHouse, noteText);
@@ -185,6 +203,7 @@ function renderOutputs(house, note) {
   document.getElementById('sheet-name').innerText = playerName;
   document.getElementById('sheet-blood').innerText = chosenBlood;
   document.getElementById('sheet-house').innerText = house;
+  document.getElementById('sheet-club').innerText = chosenClub;
   document.getElementById('sorting-hat-note').innerHTML = note;
   document.getElementById('sheet-wand').innerText = "12½ inches, Ebony Wood with Dragon Heartstring Core";
   document.getElementById('sheet-companion').innerText = chosenAnimal;
@@ -203,7 +222,7 @@ function renderOutputs(house, note) {
   document.getElementById('sheet-subjects').innerHTML = subjectListHTML;
 
   document.getElementById('sheet-swot').innerHTML = `
-    <li><strong>Strength:</strong> Deep adaptability combined with unique ${chosenAbility}.</li>
+    <li><strong>Strength:</strong> Deep adaptability combined with ${chosenAbility} and involvement in ${chosenClub}.</li>
     <li><strong>Weakness:</strong> Susceptible to over-analysing decisions under critical pressure.</li>
     <li><strong>Opportunity:</strong> Ability to leverage ${chosenBlood} heritage to bridge magical arts.</li>
     <li><strong>Threat:</strong> Over-reliance on personal shields in unfamiliar environments.</li>
@@ -213,6 +232,7 @@ function renderOutputs(house, note) {
   document.getElementById('id-name').innerText = playerName;
   document.getElementById('id-house').innerText = house;
   document.getElementById('id-blood').innerText = chosenBlood;
+  document.getElementById('id-club').innerText = chosenClub;
   document.getElementById('id-electives-count').innerText = `${selectedSubjects.length} Enrolled`;
   document.getElementById('id-house-icon').innerText = houseIcons[house] || "⚡";
 
